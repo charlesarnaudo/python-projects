@@ -1,10 +1,19 @@
 import nflgame
 import argparse
 
-parser = argparse.ArgumentParser(description="Find NFL Game information.")
+parser = argparse.ArgumentParser(description="Find NFL Game information.", add_help=False)
+required = parser.add_argument_group('required arguments')
+optional = parser.add_argument_group('optional arguments')
 
-parser.add_argument('-w', metavar='', help='week to seach for', type=int)
-parser.add_argument('-y', metavar='', help='year to seach for', type=int)
+
+#required args
+required.add_argument('--stat', help='category of stat to search for', required=True)
+
+#optional args
+optional.add_argument("-h", "--help", action="help", help="show this help message and exit")
+optional.add_argument('-w', metavar='', help='week to seach for', type=int)
+optional.add_argument('-y', metavar='', help='year to seach for', type=int)
+
 args = parser.parse_args()
 
 week = args.w
