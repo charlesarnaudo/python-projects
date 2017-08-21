@@ -7,7 +7,7 @@ optional = parser.add_argument_group('optional arguments')
 
 
 #required args
-required.add_argument('--stat', help='category of stat to search for', required=True)
+required.add_argument('-stat', metavar='', help='category of stat to search for', required='True')
 
 #optional args
 optional.add_argument("-h", "--help", action="help", help="show this help message and exit")
