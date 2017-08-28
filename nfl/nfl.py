@@ -10,7 +10,6 @@ def topPasser(week, year, limit):
         msg = '%s  %d completed, %d passed, for %d yards, %d TDs and %d INTs'
         print msg % (p, p.passing_cmp, p.passing_att, p.passing_yds,
                      p.passing_tds, p.passing_ints)
-    print " "
 
 parser = argparse.ArgumentParser(description="Find NFL Game information.", add_help=False)
 
@@ -31,7 +30,7 @@ year    = args.y
 limit   = args.l
 tp = args.tp
 
-print ""
-
 if tp:
     topPasser(week, year, limit)
+else:
+    print parser.print_help()
