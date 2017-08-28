@@ -11,13 +11,16 @@ class NFLFunc(object):
 
 
     def passer(self):
-        games = nflgame.games(2012, 5)
+        print ""
+        games = nflgame.games(self.year, self.week)
         players = nflgame.combine_game_stats(games)
 
+        ans = []
         for p in players.passing().sort('passing_tds').limit(self.limit):
             msg = '%s  %d completed, %d passed, for %d yards, %d TDs and %d INTs'
-            return msg % (p, p.passing_cmp, p.passing_att, p.passing_yds, p.passing_tds, p.passing_ints)
-
+            ans.append(msg % (p, p.passing_cmp, p.passing_att, p.passing_yds,
+                         p.passing_tds, p.passing_ints))
+        return ans
 
 class NFLParse(object):
 
@@ -42,13 +45,14 @@ Common commands:
     def passer(self):
         parser = argparse.ArgumentParser(
             description='Get information about passers')
-        parser.add_argument('-w', metavar='', help='week to seach for', type=int, required=True)
         parser.add_argument('-y', metavar='', help='year to seach for', type=int, required=True)
-        parser.add_argument('-l', metavar='', default=5, help='limit of results', type=int, required=True)
+        parser.add_argument('-w', metavar='', help='week to seach for', type=int, required=True)
+        parser.add_argument('-l', metavar='', default=5, help='limit of results', nargs='?', type=int)
         # 2 onwards for the rest of args
         args = parser.parse_args(sys.argv[2:])
         func = NFLFunc(args)
-        print func.passer()
+        ans = func.passer()
+        print '\n'.join(ans)
 
 
 if __name__ == '__main__':
