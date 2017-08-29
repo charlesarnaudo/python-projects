@@ -1,56 +1,64 @@
-from TwitterSearch import *
 import config
+import argparse
+from TwitterSearch import *
 
-try:
-    tuo = TwitterUserOrder('dylanilkowitz')
+parser = argparse.ArgumentParser(description="Get username")
+parser.add_argument('-u', metavar='', help='user to seach against', type=str, required=True)
 
-    ts = TwitterSearch(
-        consumer_key = config.consumer_key,
-        consumer_secret = config.consumer_secret,
-        access_token = config.access_token,
-        access_token_secret = config.access_token_secret
-    )
+args = parser.parse_args()
 
-    tf = 0
-    sum = 0
-    for tweet in ts.search_tweets_iterable(tuo):
-        #print( '@%s tweeted: %s' % ( tweet['user']['screen_name'], tweet['text'] ) )
-        sum += 1
-        if "title" in tweet['text'].lower():
-            tf += 1
-        if "fight" in tweet['text'].lower():
-            tf += 1
-        if "title fight" in tweet['text'].lower():
-            tf += 1
-        if "27" in tweet['text'].lower():
-            tf += 1
-        if "numb" in tweet['text'].lower():
-            tf += 1
-        if "shed" in tweet['text'].lower():
-            tf += 1
-        if "floral" in tweet['text'].lower():
-            tf += 1
-        if "society" in tweet['text'].lower():
-            tf += 1
-        if "skin" in tweet['text'].lower():
-            tf += 1
-        if "hyperview" in tweet['text'].lower():
-            tf += 1
-        if "ceiling fan" in tweet['text'].lower():
-            tf += 1
-        if "all away" in tweet['text'].lower():
-            tf += 1
-        if "kingston" in tweet['text'].lower():
-            tf += 1
-        if "hopeless" in tweet['text'].lower():
-            tf += 1
+tuo = TwitterUserOrder(args.u)
 
-    #print(sum)
-    #print(tf)
-    avg = tf / sum
-    ans = float("{0:.2f}".format(avg))
+ts = TwitterSearch(
+    consumer_key = config.consumer_key,
+    consumer_secret = config.consumer_secret,
+    access_token = config.access_token,
+    access_token_secret = config.access_token_secret
+)
 
-    print ("@dylanilkowitz has tweeted about Title Fight in approximately " + str(ans) + "% of their tweets")
+tf = ['title',
+      'fight',
+      'the last thing',
+      'shed',
+      'floral green',
+      'spring songs'
+      'hyperview',
+      'symmetry',
+      'like a mirror'
+      'western haiku',
+      'the top forever',
+      'coxton',
+      'train nearby',
+      'your skin',
+      '72',
+      '27',
+      'where am i',
+      'stab',
+      'GMT',
+      'numb',
+      'all away',
+      'leaf',
+      'like a ritual',
+      'ceiling fan',
+      'blush',
+      'receiving line',
+      'your loss',
+      'get that a lot',
+      'murder your memory',
+      'chlorine',
+      'don\'t count on me',
+      'hypernight',
+      'rose of sharon'
+]
 
-except TwitterSearchException as e: # catch all those ugly errors
-    print(e)
+occ = 0
+count = 0
+for tweet in ts.search_tweets_iterable(tuo):
+    count += 1
+    for term in tf:
+        if term in tweet['text'].lower():
+            occ +=1
+
+ans = float("{0:.2f}".format(occ / count))
+
+print(args.u + " has tweeted about Title fight in " + str(ans) + "% of their tweets")
