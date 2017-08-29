@@ -1,13 +1,14 @@
 from TwitterSearch import *
+import config
 
 try:
-    tuo = TwitterUserOrder('Chazapoo')
+    tuo = TwitterUserOrder('dylanilkowitz')
 
     ts = TwitterSearch(
-        consumer_key = '',
-        consumer_secret = '',
-        access_token = '',
-        access_token_secret = ''
+        consumer_key = config.consumer_key,
+        consumer_secret = config.consumer_secret,
+        access_token = config.access_token,
+        access_token_secret = config.access_token_secret
     )
 
     tf = 0
@@ -44,9 +45,12 @@ try:
         if "hopeless" in tweet['text'].lower():
             tf += 1
 
-    avg = sum / tf
+    #print(sum)
+    #print(tf)
+    avg = tf / sum
     ans = float("{0:.2f}".format(avg))
 
-    print ("You have tweeted about Title Fight in approximately " + str(ans) + "% of your tweets")
+    print ("@dylanilkowitz has tweeted about Title Fight in approximately " + str(ans) + "% of their tweets")
+
 except TwitterSearchException as e: # catch all those ugly errors
     print(e)
