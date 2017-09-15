@@ -9,9 +9,10 @@ def __main__():
 
     parser = argparse.ArgumentParser(description='tweet a lot')
 
-    parser.add_argument('-f', nargs = 1, type=str,
-        metavar='<input_file>',
-        help = 'file which containts text to tweet',
-        required = True)
+    parser.add_argument('-f',
+                        nargs = 1, type=str,
+                        metavar='<input_file>',
+                        help = 'file which containts text to tweet',
+                        required = True)
 
     args = parser.parse_args()
