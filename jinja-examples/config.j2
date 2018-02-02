@@ -1,0 +1,3 @@
+{
+    "retry_join": [{%- for host foo %}"{{ host }}"{%- if not loop.last %},{%- endif %}{%- endfor %}]
+}
